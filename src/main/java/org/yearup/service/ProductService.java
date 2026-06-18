@@ -27,8 +27,8 @@ public class ProductService
                        .filter(p -> maxPrice == null || p.getPrice() <= maxPrice)
                        .filter(p -> subCategory == null || subCategory.equalsIgnoreCase(p.getSubCategory()))
                        //.filter(Product::isFeatured)
-                //TODO The line above  was causing a bug with the streams process
-                //
+                //TODO The line above was causing a bug with the streams process.
+                //It was throwing away products that was not featured.
                        .toList();
     }
 
