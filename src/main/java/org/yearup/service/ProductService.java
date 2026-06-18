@@ -27,8 +27,10 @@ public class ProductService
                        .filter(p -> maxPrice == null || p.getPrice() <= maxPrice)
                        .filter(p -> subCategory == null || subCategory.equalsIgnoreCase(p.getSubCategory()))
                        //.filter(Product::isFeatured)
-                //TODO The line above was causing a bug with the streams process.
+                //The line above was causing a bug with the streams process.
                 //It was throwing away products that was not featured.
+                //Because it was at the end with no conditions it caused a hard-stop in the filtering.
+                //Removing allowed the streams to fully process users are looking for.
                        .toList();
     }
 
@@ -58,6 +60,8 @@ public class ProductService
         existing.setSubCategory(product.getSubCategory());
         existing.setFeatured(product.isFeatured());
         existing.setImageUrl(product.getImageUrl());
+        //Added this setter into the update method. Adding this is simply writing the missing instruction-
+        //thats telling the system to look for the new stock number and write it down.
         existing.setStock(product.getStock());
         return productRepository.save(existing);
     }
